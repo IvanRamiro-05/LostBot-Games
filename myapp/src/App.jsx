@@ -1,6 +1,6 @@
 // App.jsx
 import React from 'react';
-import './App.css';
+import './paginas/Estilos/App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 

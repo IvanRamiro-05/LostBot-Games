@@ -1,5 +1,5 @@
 import React from 'react';
-import './GameSection.css';
+import './Estilos/GameSection.css';
 
 // Importar las imágenes directamente
 import juego6 from './imagenes/juego6.jpg';

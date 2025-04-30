@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Carousel.css';
+import './Estilos/Carousel.css';
 
 // Importar las imágenes directamente
 import juego1 from './imagenes/juego1.jpg';

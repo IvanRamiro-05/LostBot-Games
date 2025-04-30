@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './Login/AuthContext';
-import './Navbar.css';
+import './Estilos/Navbar.css';
 import logo from './imagenes/logo-03.png';
 
 const Navbar = () => {
@@ -72,6 +72,7 @@ const Navbar = () => {
             
             {isAuthenticated() && (
               <li className="nav-item">
+                {/* Actualizamos el enlace para usar la ruta /biblioteca tal como está definida en App.jsx */}
                 <Link to="/biblioteca" className="nav-link" onClick={closeMenu}>BIBLIOTECA</Link>
               </li>
             )}

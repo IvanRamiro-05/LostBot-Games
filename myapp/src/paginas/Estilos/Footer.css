@@ -22,9 +22,7 @@
   padding: 0 15px;
 }
 
-.footer-column:first-child {
-  flex: 2;
-}
+
 
 .footer-logo {
   display: block;
