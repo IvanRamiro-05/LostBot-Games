@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './Login/AuthContext';
+import { useAuth } from '../AuthContext';
 import logo from './imagenes/logo-03.png';
 import './Estilos/Navbar.css';
 
@@ -21,15 +21,10 @@ const Navbar = () => {
 
   return (
     <nav>
+      
       <Link to="/">
-        <img src={logo} className="logo" alt="LostBot Games"/>
+        <img src={logo} className="logo" alt="LostBot Games" />
       </Link>
-
-      <div className="menu-toggle" onClick={toggleMenu}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
 
       <div className={`search-container ${isActive ? 'active' : ''}`}>
         <input 
@@ -38,44 +33,68 @@ const Navbar = () => {
           placeholder="Buscar..." 
         />
       </div>
-
+      
       <ul className={isActive ? 'active' : ''}>
-        <li className='tienda dropdown'>
-          <Link to="/tienda" onClick={() => setIsActive(false)}>TIENDA</Link>
+        {/* Rutas públicas */}
+        <li>
+          <Link to="/" onClick={() => setIsActive(false)}>INICIO</Link>
+        </li>
+
+        
+
+        {/* Pestaña desplegable de TIENDA */}
+        <li className="dropdown">
+          <span>TIENDA</span>
           <ul className="dropdown-content">
-            <li><Link to="/tienda/novedades">Novedades</Link></li>
-            <li><Link to="/tienda/ofertas">Ofertas</Link></li>
-            <li><Link to="/tienda/mas-vendidos">Más Vendidos</Link></li>
-            <li><Link to="/tienda/proximos">Próximos Lanzamientos</Link></li>
+            <li>
+              <Link to="/novedades" onClick={() => setIsActive(false)}>Novedades</Link>
+            </li>
+            <li>
+              <Link to="/ofertas" onClick={() => setIsActive(false)}>Ofertas</Link>
+            </li>
+            <li>
+              <Link to="/mas-vendidos" onClick={() => setIsActive(false)}>Más Vendidos</Link>
+            </li>
+            <li>
+              <Link to="/proximos-lanzamientos" onClick={() => setIsActive(false)}>Próximos Lanzamientos</Link>
+            </li>
           </ul>
         </li>
 
-        {isAuthenticated() && (
-          <li>
-            <Link to="/biblioteca" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
-          </li>
-        )}
-        
-        <li className='categorias dropdown'>
-          <Link to="/categorias" onClick={() => setIsActive(false)}>CATEGORÍAS</Link>
+        {/* Pestaña desplegable de CATEGORÍAS */}
+        <li className="dropdown">
+          <span>CATEGORÍAS</span>
           <ul className="dropdown-content">
-            <li><Link to="/categorias/accion">Acción</Link></li>
-            <li><Link to="/categorias/aventura">Aventura</Link></li>
-            <li><Link to="/categorias/rpg">RPG</Link></li>
-            <li><Link to="/categorias/simulacion">Simulación</Link></li>
-            <li><Link to="/categorias/estrategia">Estrategia</Link></li>
-            <li><Link to="/categorias/deportes">Deportes</Link></li>
+            <li>
+              <Link to="/categorias/fps" onClick={() => setIsActive(false)}>FPS</Link>
+            </li>
+            <li>
+              <Link to="/categorias/moba" onClick={() => setIsActive(false)}>MOBA</Link>
+            </li>
+            <li>
+              <Link to="/categorias/rpg" onClick={() => setIsActive(false)}>RPG</Link>
+            </li>
+            <li>
+              <Link to="/categorias/sandbox" onClick={() => setIsActive(false)}>Sandbox</Link>
+            </li>
           </ul>
         </li>
 
+        {/* Rutas protegidas */}
         {isAuthenticated() && (
-          <li>
-            <Link to="/perfil" onClick={() => setIsActive(false)}>PERFIL</Link>
-          </li>
+          <>
+            <li>
+              <Link to="/perfil" onClick={() => setIsActive(false)}>PERFIL</Link>
+            </li>
+            <li>
+              <Link to="/biblioteca" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
+            </li>
+          </>
         )}
-        
-        <li className="login">
-          {isAuthenticated() ? (
+
+        {/* Login/Logout */}
+        <li>
+        {isAuthenticated() ? (
             <Link to="/" onClick={handleLogout}>
               LOGOUT
             </Link>

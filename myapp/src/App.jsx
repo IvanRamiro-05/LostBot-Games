@@ -1,21 +1,15 @@
-// App.jsx
 import React from 'react';
 import './paginas/Estilos/App.css';
 import { Routes, Route } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-
-// Componentes públicos
 import PublicLayout from './paginas/PublicLayout';
+import OutletContent from './paginas/OutletContent';
 import Home from './paginas/Home';
 import Login from './paginas/Login/Login';
 import NoPage from './paginas/NoPage';
-import Carousel from './paginas/Carousel';
-import GameSection from './paginas/GameSection';
-
-// Componentes protegidos
 import ProtectedRoute from './ProtectedRoute';
+import Perfil from './paginas/Perfil';
 import ZonaJuego from './paginas/ZonaJuego';
-import OutletContent from './paginas/OutletContent';
+import GameSection from './paginas/GameSection';
 
 const App = () => {
   return (
@@ -25,16 +19,14 @@ const App = () => {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/carousel" element={<Carousel />} />
           <Route path="/games" element={<GameSection />} />
-
         </Route>
 
         {/* Rutas protegidas */}
         <Route element={<ProtectedRoute />}>
           <Route element={<OutletContent />}>
+            <Route path="/perfil" element={<Perfil />} />
             <Route path="/biblioteca" element={<ZonaJuego />} />
-            <Route path="/perfil" element={<div>Perfil del Usuario</div>} />
           </Route>
         </Route>
 
