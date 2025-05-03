@@ -1,5 +1,7 @@
 import React from 'react';
 import './Estilos/GameSection.css';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 // Importar las imágenes directamente
 import juego6 from './imagenes/juego6.jpg';
@@ -13,6 +15,18 @@ import juego13 from './imagenes/juego13.jpg';
 
 const GameCard = ({ game }) => {
   const { image, title, description, price, originalPrice, discount, genres } = game;
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  
+  const handleCompra = () => {
+    if (isAuthenticated()) {
+      // Redirigir al formulario de compra con los datos del juego
+      navigate('/Compra', { state: { game } });
+    } else {
+      // Redirigir a la página de login
+      navigate('/login');
+    }
+  };
   
   return (
     <div className="game-card">
@@ -28,7 +42,10 @@ const GameCard = ({ game }) => {
           ${price} {originalPrice && <strike>${originalPrice}</strike>}
         </p>
         <div className="game-buttons">
-          <button className="game-button buy-button">
+          <button 
+            className="game-button buy-button"
+            onClick={handleCompra}
+          >
             {price === 'Gratis' ? 'Descargar' : 'Comprar'}
           </button>
           <button className="game-button wishlist-button">Wishlist</button>

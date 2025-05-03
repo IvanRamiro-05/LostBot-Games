@@ -10,6 +10,8 @@ import ProtectedRoute from './ProtectedRoute';
 import Perfil from './paginas/Perfil';
 import ZonaJuego from './paginas/ZonaJuego';
 import GameSection from './paginas/GameSection';
+import CompraForm from './paginas/CompraForm';
+import CompraSuccess from './paginas/CompraSuccess';
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
           <Route element={<OutletContent />}>
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/biblioteca" element={<ZonaJuego />} />
+            <Route path="/Compra" element={<CompraForm />} />
+            <Route path="/Compra-success" element={<CompraSuccess />} />
           </Route>
         </Route>
 
