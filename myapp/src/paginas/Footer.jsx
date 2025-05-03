@@ -14,10 +14,10 @@ const Footer = () => {
           <p>Tu destino para descubrir, comprar y jugar los mejores títulos.</p>
            <p> Ofrecemos una experiencia de juego inigualable con precios competitivos.</p>
           <div className="social-icons">
-            <a href="#" className="social-icon">F</a>
-            <a href="#" className="social-icon">T</a>
-            <a href="#" className="social-icon">I</a>
-            <a href="#" className="social-icon">Y</a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">F</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-icon">T</a>
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">I</a>
+            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" className="social-icon">Y</a>
           </div>
         </div>
        
