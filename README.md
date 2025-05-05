@@ -118,12 +118,12 @@ El estado de autenticación se gestiona a través de un contexto de React (`Auth
 
 1. Clona el repositorio:
    ```
-   git clone <URL-del-repositorio>
+   git clone http://https://github.com/IvanRamiro-05/LostBot-Games.git
    ```
 
 2. Instala las dependencias:
    ```
-   cd Proyecto_react/myapp
+   cd myapp
    npm install
    ```
 
