@@ -26,6 +26,12 @@ const Navbar = () => {
         <img src={logo} className="logo" alt="LostBot Games" />
       </Link>
 
+      <div className="menu-toggle" onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <div className={`search-container ${isActive ? 'active' : ''}`}>
         <input 
           type="text" 
@@ -35,66 +41,43 @@ const Navbar = () => {
       </div>
       
       <ul className={isActive ? 'active' : ''}>
-        {/* Rutas públicas */}
-        <li>
-          <Link to="/" onClick={() => setIsActive(false)}>INICIO</Link>
-        </li>
-
-        
-
         {/* Pestaña desplegable de TIENDA */}
-        <li className="dropdown">
-          <span>TIENDA</span>
+        <li className="tienda dropdown">
+          <Link to="/" onClick={() => setIsActive(false)}>TIENDA</Link>
           <ul className="dropdown-content">
-            <li>
-              <Link to="/novedades" onClick={() => setIsActive(false)}>Novedades</Link>
-            </li>
-            <li>
-              <Link to="/ofertas" onClick={() => setIsActive(false)}>Ofertas</Link>
-            </li>
-            <li>
-              <Link to="/mas-vendidos" onClick={() => setIsActive(false)}>Más Vendidos</Link>
-            </li>
-            <li>
-              <Link to="/proximos-lanzamientos" onClick={() => setIsActive(false)}>Próximos Lanzamientos</Link>
-            </li>
+            <li><Link to="/tienda/novedades">Novedades</Link></li>
+            <li><Link to="/tienda/ofertas">Ofertas</Link></li>
+            <li><Link to="/tienda/mas-vendidos">Más Vendidos</Link></li>
+            <li><Link to="/tienda/proximos">Próximos Lanzamientos</Link></li>
           </ul>
         </li>
 
-        {/* Pestaña desplegable de CATEGORÍAS */}
-        <li className="dropdown">
-          <span>CATEGORÍAS</span>
-          <ul className="dropdown-content">
-            <li>
-              <Link to="/categorias/fps" onClick={() => setIsActive(false)}>FPS</Link>
-            </li>
-            <li>
-              <Link to="/categorias/moba" onClick={() => setIsActive(false)}>MOBA</Link>
-            </li>
-            <li>
-              <Link to="/categorias/rpg" onClick={() => setIsActive(false)}>RPG</Link>
-            </li>
-            <li>
-              <Link to="/categorias/sandbox" onClick={() => setIsActive(false)}>Sandbox</Link>
-            </li>
-          </ul>
-        </li>
-
-        {/* Rutas protegidas */}
         {isAuthenticated() && (
-          <>
-            <li>
-              <Link to="/perfil" onClick={() => setIsActive(false)}>PERFIL</Link>
-            </li>
-            <li>
-              <Link to="/biblioteca" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
-            </li>
-          </>
+          <li>
+            <Link to="/biblioteca" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
+          </li>
         )}
 
-        {/* Login/Logout */}
-        <li>
-        {isAuthenticated() ? (
+        <li className='categorias dropdown'>
+          <Link to="/" onClick={() => setIsActive(false)}>CATEGORÍAS</Link>
+          <ul className="dropdown-content">
+            <li><Link to="/categorias/accion">Acción</Link></li>
+            <li><Link to="/categorias/aventura">Aventura</Link></li>
+            <li><Link to="/categorias/rpg">RPG</Link></li>
+            <li><Link to="/categorias/simulacion">Simulación</Link></li>
+            <li><Link to="/categorias/estrategia">Estrategia</Link></li>
+            <li><Link to="/categorias/deportes">Deportes</Link></li>
+          </ul>
+        </li>
+
+        {isAuthenticated() && (
+          <li>
+            <Link to="/perfil" onClick={() => setIsActive(false)}>PERFIL</Link>
+          </li>
+        )}
+    
+        <li className="login">
+          {isAuthenticated() ? (
             <Link to="/" onClick={handleLogout}>
               LOGOUT
             </Link>

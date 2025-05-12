@@ -15,7 +15,7 @@ const CompraSuccess = () => {
         </div>
         <button 
           className="btn btn-primary mt-3" 
-          onClick={() => navigate('/games')}
+          onClick={() => navigate('/')}
         >
           Volver a la tienda
         </button>
@@ -73,7 +73,7 @@ const CompraSuccess = () => {
               <div className="col-md-6">
                 <button 
                   className="btn btn-outline-secondary btn-lg w-100"
-                  onClick={() => navigate('/games')}
+                  onClick={() => navigate('/')}
                 >
                   Seguir Comprando
                 </button>

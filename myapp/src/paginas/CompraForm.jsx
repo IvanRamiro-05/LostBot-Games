@@ -258,7 +258,7 @@ const CompraForm = () => {
                     <button 
                       type="button" 
                       className="btn btn-outline-secondary btn-lg w-100 mt-3"
-                      onClick={() => navigate('/games')}
+                      onClick={() => navigate('/')}
                     >
                       Cancelar y Volver
                     </button>

@@ -6,29 +6,21 @@
 }
 
 .card {
-  background-color: rgba(30, 30, 30, 0.9);
-  color: #ffffff;
+  background-color: rgba(30, 30, 30, 0.9)!important;
+  color: #ffffff!important;
   border: none;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .card-header {
-  background-color: rgba(40, 40, 40, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.form-control, .form-select {
-  background-color: rgba(50, 50, 50, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border-bottom: 3px solid rgba(79, 3, 3) !important;
 }
 
 .form-control:focus, .form-select:focus {
-  background-color: rgba(60, 60, 60, 0.8);
-  color: #ffffff;
-  border-color: rgb(142, 3, 3);
-  box-shadow: 0 0 0 0.25rem rgba(142, 3, 3, 0.25);
+  background-color: rgba(60, 60, 60, 1.5);
+  border-color: transparent !important;
+  box-shadow: 0 0 0 0.25rem rgba(142, 3, 3, 0.527)!important;
 }
 
 .form-control::placeholder {
@@ -36,14 +28,14 @@
 }
 
 .btn-primary {
-  background-color: rgb(142, 3, 3);
-  border-color: rgb(142, 3, 3);
+  background-color: rgb(142, 3, 3)!important;
+  border-color: rgb(142, 3, 3)!important;
 }
 
 .btn-primary:hover {
-  background-color: rgb(180, 4, 4);
-  border-color: rgb(180, 4, 4);
-}
+  background-color: rgb(180, 4, 4)!important;
+  border-color: rgb(180, 4, 4)!important;
+} 
 
 .btn-outline-secondary {
   color: #ffffff;
@@ -56,9 +48,10 @@
 }
 
 .list-group-item {
-  background-color: transparent;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff !important;
+  background-color: transparent !important;
+  /* Deshabilitar completamente el efecto hover en Bootstrap */
+  pointer-events: none !important;
 }
 
 .invalid-feedback {
