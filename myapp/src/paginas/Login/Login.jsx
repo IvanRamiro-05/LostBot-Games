@@ -23,7 +23,27 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-      await login({ username: email, email });
+      
+      // Verificar si existen usuarios registrados
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
+      
+      // Demo: también permitir el usuario de prueba
+      if (email === 'usuario@ejemplo.com' && password === 'contraseña123') {
+        await login({ username: 'Usuario Demo', email });
+        navigate('/');
+        return;
+      }
+      
+      // Verificar si el usuario existe
+      if (!user) {
+        throw new Error('Usuario no encontrado');
+      }
+      
+      // En una app real, verificaríamos la contraseña hasheada
+      // Por simplicidad, solo verificamos que el usuario exista
+      
+      await login({ username: user.username, email: user.email });
       navigate('/');
     } catch (err) {
       setError('Email o contraseña incorrectos');
