@@ -158,7 +158,7 @@ Para probar la aplicación, puedes utilizar las siguientes credenciales:
 
 - Snheider Alejandro Olarte Saavedra - 2224656
 - Alejandro Salazar Rincón - 2224640
-- Juan Esteban Huertas - 2214231
+- Juan Esteban Huertas - 221423
 - Iván Ramiro Suarez Diaz - 2224654
 - Julian Javier Lizcano - 2224647
 
