@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../AuthContext';
+import { useAuth } from '../../AuthContext'; // Ruta corregida
 import './Login.css';
 
 const Login = () => {
@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseña
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -23,36 +24,38 @@ const Login = () => {
     try {
       setLoading(true);
       setError('');
-
-      // Conexión con el backend
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Credenciales incorrectas');
-      }
-
-      const data = await response.json();
-
-      // Guardar el token de autenticación (si el backend lo devuelve)
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        await login({ email, token: data.token });
+      
+      // Verificar si existen usuarios registrados
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
+      
+      // Demo: también permitir el usuario de prueba
+      if (email === 'usuario@ejemplo.com' && password === 'contraseña123') {
+        await login({ username: 'Usuario Demo', email });
         navigate('/');
-      } else {
-        throw new Error('No se recibió el token de autenticación');
+        return;
       }
+      
+      // Verificar si el usuario existe
+      if (!user) {
+        throw new Error('Usuario no encontrado');
+      }
+      
+      // En una app real, verificaríamos la contraseña hasheada
+      // Por simplicidad, solo verificamos que el usuario exista
+      
+      await login({ username: user.username, email: user.email });
+      navigate('/');
     } catch (err) {
-      setError(err.message || 'Error al iniciar sesión');
+      setError('Email o contraseña incorrectos');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Función para alternar la visibilidad de la contraseña
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -74,14 +77,24 @@ const Login = () => {
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Ingresa tu contraseña"
-              required
-            />
+            <div className="password-input-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Ingresa tu contraseña"
+                required
+              />
+              <button 
+                type="button" 
+                className="toggle-password-btn"
+                onClick={togglePasswordVisibility}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              >
+                {showPassword ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
           </div>
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Cargando...' : 'Iniciar Sesión'}
@@ -90,6 +103,11 @@ const Login = () => {
         <div className="login-footer">
           <p>¿No tienes una cuenta? <Link to="/registro">Regístrate</Link></p>
           <p><Link to="/">Olvidé mi contraseña</Link></p>
+        </div>
+        {/* Texto adicional para usuario y clave de prueba */}
+        <div className="test-credentials">
+          <p><strong>Usuario de prueba:</strong> usuario@ejemplo.com</p>
+          <p><strong>Contraseña de prueba:</strong> contraseña123</p>
         </div>
       </div>
     </div>

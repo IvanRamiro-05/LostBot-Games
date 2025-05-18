@@ -59,6 +59,46 @@
   box-shadow: 0 0 5px rgba(142, 3, 3, 0.5);
 }
 
+/* Estilos para el contenedor de input de contraseña */
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-container input {
+  flex-grow: 1;
+  padding-right: 40px; /* Espacio para el botón */
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.toggle-password-btn:hover {
+  background-color: rgba(142, 3, 3, 0.1);
+  color: white;
+}
+
+.toggle-password-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(142, 3, 3, 0.3);
+}
+
 .login-button {
   width: 100%;
   padding: 10px;
