@@ -12,6 +12,8 @@ import ZonaJuego from './paginas/ZonaJuego';
 import GameSection from './paginas/GameSection';
 import CompraForm from './paginas/CompraForm';
 import CompraSuccess from './paginas/CompraSuccess';
+import Registro from './paginas/Registro';
+
 
 const App = () => {
   return (
@@ -20,6 +22,7 @@ const App = () => {
         {/* Rutas públicas */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/games" element={<GameSection />} />
         </Route>
