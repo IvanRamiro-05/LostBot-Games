@@ -124,6 +124,30 @@
   font-style: italic;
 }
 
+.contact-btn-container {
+  margin: 15px 0;
+}
+
+.contact-btn {
+  display: inline-block;
+  background-color: rgb(142, 3, 3);
+  color: white !important;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-btn:hover {
+  background-color: rgb(180, 4, 4);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(142, 3, 3, 0.4);
+  color: white !important;
+}
+
 @media (max-width: 992px) {
   .footer-column {
     flex-basis: 50%;

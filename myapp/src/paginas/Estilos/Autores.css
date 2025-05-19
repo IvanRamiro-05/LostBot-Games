@@ -1,0 +1,324 @@
+.autores-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #f1f1f1;
+  padding-bottom: 80px;
+}
+
+.autores-hero {
+  background: linear-gradient(135deg, #1f0808, #8e0303, #b50404);
+  padding: 80px 20px;
+  text-align: center;
+  margin-bottom: 60px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.autores-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('./imagenes/pattern.png');
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.autores-hero h1 {
+  font-size: 3.5rem;
+  margin: 0 0 20px;
+  font-weight: 800;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+  letter-spacing: 1px;
+}
+
+.autores-hero p {
+  font-size: 1.4rem;
+  max-width: 700px;
+  margin: 0 auto;
+  opacity: 0.95;
+  position: relative;
+  z-index: 2;
+  font-weight: 300;
+}
+
+.autores-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.autor-card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-bottom: 4px solid #8e0303;
+  position: relative;
+}
+
+.autor-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 20px 40px rgba(142, 3, 3, 0.4);
+}
+
+.autor-image {
+  height: 280px;
+  overflow: hidden;
+  position: relative;
+}
+
+.autor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.autor-card:hover .autor-image img {
+  transform: scale(1.08);
+}
+
+.autor-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(142, 3, 3, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.autor-card:hover .autor-overlay {
+  opacity: 1;
+}
+
+.autor-info {
+  padding: 25px;
+}
+
+.autor-info h2 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.autor-info h3 {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+  color: #c70202;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.autor-info p {
+  color: #bbb;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.autor-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 70%;
+}
+
+.autor-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.autor-link i {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+.autor-link.github {
+  background-color: #333;
+  color: white;
+  border: 2px solid #333;
+}
+
+.autor-link.github:hover {
+  background-color: #000;
+  border-color: #fff;
+}
+
+.autor-link.linkedin {
+  background-color: #0077b5;
+  color: white;
+  border: 2px solid #0077b5;
+}
+
+.autor-link.linkedin:hover {
+  background-color: #005f8d;
+  border-color: #fff;
+}
+
+.autor-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.autores-extra {
+  max-width: 900px;
+  margin: 90px auto 0;
+  padding: 40px;
+  background-color: #1a1a1a;
+  border-radius: 15px;
+  border-left: 5px solid #8e0303;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.autores-extra h2 {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  color: #fff;
+  position: relative;
+  padding-bottom: 15px;
+  font-weight: 700;
+}
+
+.autores-extra h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  height: 4px;
+  background-color: #8e0303;
+}
+
+.autores-extra p {
+  color: #bbb;
+  line-height: 1.9;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.tecnologias {
+  margin-top: 40px;
+}
+
+.tecnologias h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.tech-icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.tech-icons span {
+  background-color: #2d2d2d;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-block;
+  border: 1px solid #444;
+  transition: all 0.3s ease;
+}
+
+.tech-icons span:hover {
+  background-color: #8e0303;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(142, 3, 3, 0.3);
+  border-color: #8e0303;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .autores-grid {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 992px) {
+  .autores-hero h1 {
+    font-size: 3rem;
+  }
+  
+  .autor-card {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .autores-hero {
+    padding: 60px 20px;
+  }
+
+  .autores-hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .autores-hero p {
+    font-size: 1.2rem;
+  }
+  
+  .autor-card {
+    max-width: 100%;
+  }
+  
+  .autores-extra {
+    padding: 30px 20px;
+    margin-top: 60px;
+  }
+  
+  .autores-extra h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .autores-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .autor-image {
+    height: 240px;
+  }
+  
+  .autor-info h2 {
+    font-size: 1.4rem;
+  }
+  
+  .autor-links {
+    width: 90%;
+  }
+}
