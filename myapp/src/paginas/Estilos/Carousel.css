@@ -121,10 +121,6 @@
   .indicator.active {
     background-color: rgb(142, 3, 3);
   }
-
-  .wishlist-button{
-    margin-left: 10px;
-  }
   
   /* Responsive styles */
   @media screen and (max-width: 768px) {

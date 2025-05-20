@@ -48,7 +48,6 @@ const GameCard = ({ game }) => {
           >
             {price === 'Gratis' ? 'Descargar' : 'Comprar'}
           </button>
-          <button className="game-button wishlist-button">Wishlist</button>
         </div>
       </div>
     </div>

@@ -13,8 +13,7 @@ import GameSection from './paginas/GameSection';
 import CompraForm from './paginas/CompraForm';
 import CompraSuccess from './paginas/CompraSuccess';
 import Registro from './paginas/Registro';
-import Autores from './paginas/Autores'; // Importar el nuevo componente
-
+import Autores from './paginas/Autores'; 
 const App = () => {
   return (
     <div className="app-container">
@@ -45,4 +44,17 @@ const App = () => {
   );
 };
 
+fetch('http://localhost:3000/')  // o la ruta que definiste en tu backend
+  .then(response => {
+    if (!response.ok) throw new Error('Error en la respuesta');
+    return response.text();       // o response.json() si es JSON
+  })
+  .then(data => {
+    console.log('Respuesta del backend:', data);
+    // Aquí puedes actualizar tu UI con los datos recibidos
+  })
+  .catch(error => {
+    console.error('Error al conectar con el backend:', error);
+  });
+  
 export default App;

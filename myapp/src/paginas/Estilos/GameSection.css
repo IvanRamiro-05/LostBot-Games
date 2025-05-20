@@ -112,20 +112,11 @@
 .buy-button {
   background-color: rgb(142, 3, 3);
   color: white;
+  width: 100%; /* Ahora ocupa todo el ancho disponible */
 }
 
 .buy-button:hover {
   background-color: rgb(180, 4, 4);
-}
-
-.wishlist-button {
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
-}
-
-.wishlist-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .discount-badge {

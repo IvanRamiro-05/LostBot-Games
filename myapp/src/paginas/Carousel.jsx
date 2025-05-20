@@ -15,7 +15,6 @@ const CarouselSlide = ({ image, title, description, isActive }) => {
         <h2>{title}</h2>
         <p>{description}</p>
         <button className="carousel-btn">Comprar</button>
-        <button className="game-button wishlist-button">Wishlist</button>
       </div>
     </div>
   );
