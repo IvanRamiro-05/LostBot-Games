@@ -16,7 +16,7 @@ app.use(cors({
   origin: 'http://localhost:5173'  // Cambia a la URL y puerto donde corre tu frontend React
 }));
 
-app.use(express.json());
+app.use(express.json()); // Esto es necesario para leer JSON en req.body
 //coneccion a la base de datos
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -43,7 +43,7 @@ app.post('/login', (req, res) => {
     [email, password],
     (err, results) => {
       if (err) return res.status(500).json({ error: 'Error en la base de datos' });
-      if (results.length === 0) return res.status(401).json({ error: 'Credenciales inválidas' });
+      if (results.length === 0) return res.status(401).json({ error: 'Email o contraseña incorrectos' });
 
       // Generar token JWT
       const user = results[0];
