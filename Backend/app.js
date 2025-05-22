@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const app = express();
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 app.use(cors({
   origin: 'http://localhost:5173'  // Cambia a la URL y puerto donde corre tu frontend React
 }));
@@ -16,43 +16,86 @@ app.use(cors({
   origin: 'http://localhost:5173'  // Cambia a la URL y puerto donde corre tu frontend React
 }));
 
-app.use(express.json()); // Esto es necesario para leer JSON en req.body
+app.use(express.json());
 //coneccion a la base de datos
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: 'localhost',
-  user: 'root',         // Cambia si tu usuario es diferente
-  password: '',         // Cambia si tienes contraseña
-  database: 'lostbot_games' // Cambia por el nombre de tu base de datos
+  user: 'root',
+  password: '',
+  database: 'lostbot_games'
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error de conexión:', err);
-  } else {
-    console.log('Conectado a MySQL');
+app.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ message: 'Faltan datos' });
+  }
+
+  try {
+    const [existingUser] = await pool.query(
+      'SELECT * FROM usuarios WHERE email = ?',
+      [email]
+    );
+
+    if (existingUser.length > 0) {
+      return res.status(409).json({ message: 'El email ya está registrado' });
+    }
+
+    await pool.query(
+      'INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)',
+      [username, email, password]
+    );
+
+    res.status(201).json({ message: 'Usuario registrado correctamente' });
+  } catch (error) {
+    console.error('Error en el registro:', error);
+    res.status(500).json({ message: 'Error al registrar usuario' });
+  }
+});
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Faltan credenciales' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM usuarios WHERE email = ?',
+      [email]
+    );
+
+    if (rows.length === 0) {
+      return res.status(401).json({ message: 'Usuario no encontrado' });
+    }
+
+    const user = rows[0];
+    console.log('Contraseña enviada:', password);
+    console.log('Contraseña en BD:', user.password);
+
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      'tu_secreto_jwt',
+      { expiresIn: '1h' }
+    );
+
+    res.json({
+      message: 'Login exitoso',
+      token,
+      username: user.nombre
+    });
+
+  } catch (error) {
+    console.error('Error en el login:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
 
-const SECRET_KEY = 'tu_clave_secreta'; // Usa una clave secreta segura
-
-// Ruta de login
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  connection.query(
-    'SELECT * FROM usuarios WHERE email = ? AND password = ?',
-    [email, password],
-    (err, results) => {
-      if (err) return res.status(500).json({ error: 'Error en la base de datos' });
-      if (results.length === 0) return res.status(401).json({ error: 'Email o contraseña incorrectos' });
-
-      // Generar token JWT
-      const user = results[0];
-      const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '2h' });
-
-      res.json({ success: true, token, user: { id: user.id, email: user.email, nombre: user.nombre } });
-    }
-  );
-});
 
 app.get('/games', (req, res) => {
   connection.query('SELECT * FROM juegos', (err, results) => {
@@ -87,6 +130,7 @@ app.get('/users/:id/achievements', (req, res) => {
     res.json(results);
   });
 });
+
 
 // aquí el resto de la configuración de app...
 app.get('/', (req, res) => {

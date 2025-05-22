@@ -13,45 +13,44 @@ const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      setError('Todos los campos son requeridos');
-      return;
+  if (!email || !password) {
+    setError('Todos los campos son requeridos');
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setError('');
+
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Error al iniciar sesión');
     }
 
-    try {
-      setLoading(true);
-      setError('');
-      
-      // Verificar si existen usuarios registrados
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users.find(u => u.email === email);
-      
-      // Demo: también permitir el usuario de prueba
-      if (email === 'usuario@ejemplo.com' && password === 'contraseña123') {
-        await login({ username: 'Usuario Demo', email });
-        navigate('/');
-        return;
-      }
-      
-      // Verificar si el usuario existe
-      if (!user) {
-        throw new Error('Usuario no encontrado');
-      }
-      
-      // En una app real, verificaríamos la contraseña hasheada
-      // Por simplicidad, solo verificamos que el usuario exista
-      
-      await login({ username: user.username, email: user.email });
-      navigate('/');
-    } catch (err) {
-      setError('Email o contraseña incorrectos');
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Guardar token en localStorage o contexto
+    localStorage.setItem('token', data.token);
+    await login({ username: data.username || email, email });
+
+    navigate('/');
+  } catch (err) {
+    setError('Email o contraseña incorrectos');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // Función para alternar la visibilidad de la contraseña
   const togglePasswordVisibility = () => {

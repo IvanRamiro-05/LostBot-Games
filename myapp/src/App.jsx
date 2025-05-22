@@ -44,6 +44,8 @@ const App = () => {
   );
 };
 
+
+
 fetch('http://localhost:3000/')  // o la ruta que definiste en tu backend
   .then(response => {
     if (!response.ok) throw new Error('Error en la respuesta');
