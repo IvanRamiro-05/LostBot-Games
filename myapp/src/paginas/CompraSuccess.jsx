@@ -24,7 +24,7 @@ const CompraSuccess = () => {
   }
   
   return (
-    <div className="Compra-success-container">
+   <div className="Compra-success-container">
       <div className="container py-5">
         <div className="card border-success mb-3 mx-auto" style={{ maxWidth: "800px" }}>
           <div className="card-header bg-success text-white">
@@ -55,7 +55,19 @@ const CompraSuccess = () => {
               <p><strong>Fecha:</strong> {new Date().toLocaleDateString()}</p>
               <p><strong>Método de Pago:</strong> Tarjeta de crédito</p>
             </div>
-            
+
+            {/* Botón de descarga de imagen */}
+            <div className="download-section mb-4">
+            <h5>Descarga tu juego</h5>
+            <a 
+            href={game.image} 
+            className="btn btn-success btn-lg" 
+            download={game.title.replace(/\s+/g, '_') + ".jpg"} 
+            >
+            Descargar Juego
+            </a>
+          </div>
+
             <div className="next-steps mb-4">
               <h5>Próximos pasos</h5>
               <p>Recibirás un correo electrónico con los detalles de tu compra y las instrucciones para descargar o activar tu juego.</p>
@@ -87,3 +99,4 @@ const CompraSuccess = () => {
 };
 
 export default CompraSuccess;
+
