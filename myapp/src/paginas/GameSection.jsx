@@ -58,6 +58,7 @@ const GameSection = () => {
   // Game data con imágenes importadas
   const games = [
     {
+      id: 1,
       image: juego6,
       title: 'Stardew Valley',
       description: 'Un encantador simulador de granja donde heredas la antigua parcela de tu abuelo y te embarcas en una vida en el campo: cultiva cosechas, cría animales, haz amigos y explora un mundo lleno de sorpresas y magia.',
@@ -67,6 +68,7 @@ const GameSection = () => {
       genres: ['Simulación', 'RPG']
     },
     {
+      id: 2,
       image: juego7,
       title: 'Dark Souls III',
       description: 'Un desafiante RPG de acción ambientado en un mundo oscuro y decadente. Enfréntate a temibles jefes mientras exploras un universo interconectado lleno de secretos, peligros y una narrativa sombría.',
@@ -74,6 +76,7 @@ const GameSection = () => {
       genres: ['RPG', 'Acción']
     },
     {
+      id: 3,
       image: juego8,
       title: 'Sekiro: Shadows Die Twice',
       description: 'Un intenso juego de acción donde juegas como "Lobo", un shinobi desfigurado que busca venganza contra el clan samurái que lo atacó y secuestró a su maestro, con mecánicas de combate basadas en desvíos y contraataques.',
@@ -83,6 +86,7 @@ const GameSection = () => {
       genres: ['Acción', 'Aventura']
     },
     {
+      id: 4,
       image: juego9,
       title: 'Marvel\'s Spider-Man 2',
       description: 'Una aventura épica donde controlas tanto a Peter Parker como a Miles Morales enfrentando a nuevos villanos en un Nueva York abierto y vibrante, con nuevas mecánicas, poderes y una historia cinemática cautivadora.',
@@ -92,6 +96,7 @@ const GameSection = () => {
       genres: ['Acción', 'Mundo Abierto']
     },
     {
+      id: 5,
       image: juego10,
       title: 'Overwatch',
       description: 'Un shooter en equipo vibrante y dinámico donde seleccionas héroes con habilidades únicas para enfrentarte a otros jugadores en diversos modos de juego, combinando estrategia y acción en mapas globales llenos de color.',
@@ -99,6 +104,7 @@ const GameSection = () => {
       genres: ['FPS', 'Multijugador']
     },
     {
+      id: 6,
       image: juego11,
       title: 'Cyberpunk 2077',
       description: 'Sumérgete en Night City, una megalópolis obsesionada con el poder y las modificaciones corporales. Como V, un mercenario fuera de la ley, persigues un implante único que es la clave de la inmortalidad.',
@@ -108,6 +114,7 @@ const GameSection = () => {
       genres: ['RPG', 'Mundo Abierto']
     },
     {
+      id: 7,
       image: juego12,
       title: 'Hades',
       description: 'Un roguelike de acción donde juegas como Zagreo, hijo de Hades, intentando escapar del inframundo. Cada intento fracasado te hace más fuerte y desbloquea más historia en este brillante juego de Supergiant Games.',
@@ -115,6 +122,7 @@ const GameSection = () => {
       genres: ['Roguelike', 'Acción']
     },
     {
+      id: 8,
       image: juego13,
       title: 'God of War',
       description: 'Acompaña a Kratos y su hijo Atreus en un viaje épico a través de los reinos nórdicos. Una reinvención de la saga que combina combate brutal con una narrativa emotiva sobre el vínculo entre padre e hijo.',
