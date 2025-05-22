@@ -97,10 +97,12 @@ console.log('Estado logros:', logros);
                   <span className="stat-number">12</span>
                   <span className="stat-label">Juegos</span>
                 </div>
-                <div className="stat-item">
-                  <span className="stat-number">45</span>
-                  <span className="stat-label">Logros</span>
-                </div>
+                   
+    <div className="stat-item">
+      <span className="stat-number">{logros.length}</span>
+      <span className="stat-label">Logros</span>
+    </div>
+
                 <div className="stat-item">
                   <span className="stat-number">67</span>
                   <span className="stat-label">Horas</span>

@@ -32,8 +32,8 @@ const Autores = () => {
     {
       id: 3,
       nombre: "Julian Javier Lizcano",
-      rol: "UX/UI Designer",
-      descripcion: "Diseñador de experiencia de usuario e interfaz gráfica.",
+      rol: "Alivio comico",
+      descripcion: "No hizo nada pero es el alivio comico del grupo.",
       imagen: autor3,
       github: "https://github.com/jjlizcano",
       linkedin: "https://linkedin.com/in/autor3"
