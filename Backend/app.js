@@ -118,20 +118,36 @@ app.get('/users/:id/library', (req, res) => {
   });
 });
 
-app.get('/users/:id/achievements', (req, res) => {
-  const userId = req.params.id;
-  const sql = `
-    SELECT logros.* FROM logros
-    JOIN usuario_logros ON logros.id = usuario_logros.logro_id
-    WHERE usuario_logros.usuario_id = ?
-  `;
-  connection.query(sql, [userId], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error en la base de datos' });
-    res.json(results);
-  });
+app.get('/logros/:email', async (req, res) => {
+  const email = req.params.email;
+  console.log('Email recibido:', email);
+
+  try {
+    const [usuarios] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
+    console.log('Resultado consulta usuarios:', usuarios);
+
+    if (usuarios.length === 0) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const usuarioId = usuarios[0].id;
+    console.log('ID usuario:', usuarioId);
+
+    const [logros] = await pool.query(
+      `SELECT l.nombre, l.descripcion
+       FROM usuario_logros ul
+       JOIN logros l ON ul.logro_id = l.id
+       WHERE ul.usuario_id = ?`,
+      [usuarioId]
+    );
+    console.log('Logros encontrados:', logros);
+
+    res.json(logros);
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
 });
-
-
 // aquí el resto de la configuración de app...
 app.get('/', (req, res) => {
   res.send('Backend funcionando correctamente');

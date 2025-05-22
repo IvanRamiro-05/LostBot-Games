@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import './Estilos/Perfil.css';
@@ -6,6 +7,36 @@ import './Estilos/Perfil.css';
 const Perfil = () => {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('info');
+  
+  
+// Estado para almacenar los logros
+
+const [logros, setLogros] = useState([]);
+useEffect(() => {
+  const fetchLogros = async () => {
+    try {
+      console.log('Email para logros:', currentUser.email);
+      const email = currentUser.email;
+
+      const res = await fetch(`http://localhost:3000/logros/${encodeURIComponent(email)}`);
+      if (!res.ok) {
+        console.error('Error en la respuesta:', res.status);
+        return;
+      }
+      const data = await res.json();
+      console.log('Logros recibidos:', data);
+      setLogros(data);
+    } catch (err) {
+      console.error('Error al obtener logros:', err);
+    }
+  };
+
+  if (currentUser?.email) {
+    fetchLogros();
+  }
+}, [currentUser]);
+
+console.log('Estado logros:', logros);
 
   return (
     <div className="perfil-page">
@@ -108,40 +139,32 @@ const Perfil = () => {
           </div>
         )}
 
-        {activeTab === 'logros' && (
-          <div className="logros-panel">
-            <h2>Mis Logros</h2>
-            <div className="logros-list">
-              <div className="logro-item">
-                <div className="logro-icon">🏆</div>
-                <div className="logro-details">
-                  <h3>Primer Victoria</h3>
-                  <p>Ganaste tu primera partida en línea</p>
-                </div>
-                <div className="logro-date">15/04/2025</div>
-              </div>
-              <div className="logro-item">
-                <div className="logro-icon">⭐</div>
-                <div className="logro-details">
-                  <h3>Coleccionista</h3>
-                  <p>Has comprado 10 juegos</p>
-                </div>
-                <div className="logro-date">02/05/2025</div>
-              </div>
-              <div className="logro-item locked">
-                <div className="logro-icon">🔒</div>
-                <div className="logro-details">
-                  <h3>Maestro del Juego</h3>
-                  <p>Completa todos los niveles en dificultad máxima</p>
-                </div>
-                <div className="logro-date">Bloqueado</div>
-              </div>
+
+ {activeTab === 'logros' && (
+  <div className="logros-panel">
+    <h2>Mis Logros</h2>
+    <div className="logros-list">
+      {logros.length === 0 ? (
+        <p>No tienes logros aún.</p>
+      ) : (
+        logros.map((logro, index) => (
+          <div className="logro-item" key={index}>
+            <div className="logro-icon">🏆</div>
+            <div className="logro-details">
+              <h3>{logro.nombre}</h3>
+              <p>{logro.descripcion}</p>
+            </div>
+            <div className="logro-date">
+              {logro.fecha ? logro.fecha.substring(0, 10) : 'Sin fecha'}
             </div>
           </div>
-        )}
+        ))
+      )}
+    </div>
+  </div>
+)}
       </div>
     </div>
   );
-};
-
+}
 export default Perfil;
