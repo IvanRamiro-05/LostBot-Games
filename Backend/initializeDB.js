@@ -1,4 +1,5 @@
 const { sequelize } = require('./database');
+const { useState } = require('react');
 
 const initDB = async () => {
     try {
@@ -155,5 +156,19 @@ const initDB = async () => {
         await sequelize.close();
     }
 };
+
+const [search, setSearch] = useState('');
+const [games, setGames] = useState([]); // Lista de juegos obtenida de la base de datos
+
+<input
+  type="text"
+  placeholder="Buscar..."
+  value={search}
+  onChange={e => setSearch(e.target.value)}
+/>
+
+const filteredGames = games.filter(game =>
+  game.name.toLowerCase().includes(search.toLowerCase())
+);
 
 module.exports = initDB;

@@ -2,6 +2,7 @@ import React from 'react';
 import './Estilos/GameSection.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useSearch } from '../SearchContext'; // <-- Importa esto
 
 // Importar las imágenes directamente
 import juego6 from './imagenes/juego6.jpg';
@@ -133,11 +134,18 @@ const GameSection = () => {
     }
   ];
 
+  const { search } = useSearch(); // <-- Usa el contexto
+
+  const filteredGames = games.filter(game =>
+    game.title.toLowerCase().includes(search.toLowerCase()) ||
+    game.description.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <section className="games-section">
       <h2 className="section-title">Juegos destacados</h2>
       <div className="games-grid">
-        {games.map((game, index) => (
+        {filteredGames.map((game, index) => (
           <GameCard key={index} game={game} />
         ))}
       </div>

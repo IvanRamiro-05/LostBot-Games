@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useSearch } from '../SearchContext'; // <-- Importa esto
 import logo from './imagenes/logo-03.png';
 import './Estilos/Navbar.css';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const { logout, isAuthenticated } = useAuth();
+  const { search, setSearch } = useSearch(); // <-- Usa el contexto
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -37,6 +39,8 @@ const Navbar = () => {
           type="text" 
           className="search-bar" 
           placeholder="Buscar..." 
+          value={search}
+          onChange={e => setSearch(e.target.value)}
         />
       </div>
       
