@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { useSearch } from '../SearchContext'; // <-- Importa esto
+import { useSearch } from '../SearchContext'; // Importa el contexto
 import logo from './imagenes/logo-03.png';
 import './Estilos/Navbar.css';
 
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const { logout, isAuthenticated } = useAuth();
-  const { search, setSearch } = useSearch(); // <-- Usa el contexto
+  const { setCategory, setSearch } = useSearch(); // Usa el contexto
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
     navigate('/');
     setIsActive(false);
+  };
+
+  const handleCategory = (cat) => {
+    setCategory(cat);
+    setSearch('');
+    setIsActive(false);
+    navigate('/');
   };
 
   const toggleMenu = () => {
@@ -39,44 +46,36 @@ const Navbar = () => {
           type="text" 
           className="search-bar" 
           placeholder="Buscar..." 
-          value={search}
-          onChange={e => setSearch(e.target.value)}
         />
       </div>
       
       <ul className={isActive ? 'active' : ''}>
-        {/* Pestaña desplegable de TIENDA */}
-        <li className="tienda dropdown">
-          <Link to="/" onClick={() => setIsActive(false)}>TIENDA</Link>
-          <ul className="dropdown-content">
-            <li><Link to="/tienda/novedades">Novedades</Link></li>
-            <li><Link to="/tienda/ofertas">Ofertas</Link></li>
-            <li><Link to="/tienda/mas-vendidos">Más Vendidos</Link></li>
-            <li><Link to="/tienda/proximos">Próximos Lanzamientos</Link></li>
-          </ul>
+        <li>
+          <Link to="/" className="nav-link" onClick={() => setIsActive(false)}>TIENDA</Link>
         </li>
 
         {isAuthenticated() && (
           <li>
-            <Link to="/biblioteca" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
+            <Link to="/biblioteca" className="nav-link" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
           </li>
         )}
 
         <li className='categorias dropdown'>
-          <Link to="/" onClick={() => setIsActive(false)}>CATEGORÍAS</Link>
+          <span className="nav-link" tabIndex={0}>CATEGORÍAS</span>
           <ul className="dropdown-content">
-            <li><Link to="/categorias/accion">Acción</Link></li>
-            <li><Link to="/categorias/aventura">Aventura</Link></li>
-            <li><Link to="/categorias/rpg">RPG</Link></li>
-            <li><Link to="/categorias/simulacion">Simulación</Link></li>
-            <li><Link to="/categorias/estrategia">Estrategia</Link></li>
-            <li><Link to="/categorias/deportes">Deportes</Link></li>
+            <li><button onClick={() => handleCategory('accion')}>Acción</button></li>
+            <li><button onClick={() => handleCategory('aventura')}>Aventura</button></li>
+            <li><button onClick={() => handleCategory('rpg')}>RPG</button></li>
+            <li><button onClick={() => handleCategory('simulacion')}>Simulación</button></li>
+            <li><button onClick={() => handleCategory('estrategia')}>Estrategia</button></li>
+            <li><button onClick={() => handleCategory('deportes')}>Deportes</button></li>
+            <li><button onClick={() => handleCategory('all')}>Todas</button></li>
           </ul>
         </li>
 
         {isAuthenticated() && (
           <li>
-            <Link to="/perfil" onClick={() => setIsActive(false)}>PERFIL</Link>
+            <Link to="/perfil" className="nav-link" onClick={() => setIsActive(false)}>PERFIL</Link>
           </li>
         )}
     

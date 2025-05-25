@@ -148,6 +148,16 @@ app.get('/logros/:email', async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
+app.get('/users/email/:email', async (req, res) => {
+  const email = req.params.email;
+  try {
+    const [rows] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
+    if (rows.length === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
+    res.json({ id: rows[0].id });
+  } catch (err) {
+    res.status(500).json({ error: 'Error en la base de datos' });
+  }
+});
 // aquí el resto de la configuración de app...
 app.get('/', (req, res) => {
   res.send('Backend funcionando correctamente');

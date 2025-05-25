@@ -2,7 +2,7 @@ import React from 'react';
 import './Estilos/GameSection.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { useSearch } from '../SearchContext'; // <-- Importa esto
+import { useSearch } from '../SearchContext';
 
 // Importar las imágenes directamente
 import juego6 from './imagenes/juego6.jpg';
@@ -134,12 +134,19 @@ const GameSection = () => {
     }
   ];
 
-  const { search } = useSearch(); // <-- Usa el contexto
+  const { search, category } = useSearch();
 
-  const filteredGames = games.filter(game =>
-    game.title.toLowerCase().includes(search.toLowerCase()) ||
-    game.description.toLowerCase().includes(search.toLowerCase())
-  );
+  const normalize = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  const filteredGames = games
+    .filter(game =>
+      category === 'all' ||
+      (game.genres && game.genres.some(g => normalize(g) === normalize(category)))
+    )
+    .filter(game =>
+      game.title.toLowerCase().includes(search.toLowerCase()) ||
+      game.description.toLowerCase().includes(search.toLowerCase())
+    );
 
   return (
     <section className="games-section">
