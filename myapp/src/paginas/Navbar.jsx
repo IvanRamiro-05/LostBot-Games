@@ -8,7 +8,7 @@ import './Estilos/Navbar.css';
 const Navbar = () => {
   const [isActive, setIsActive] = useState(false);
   const { logout, isAuthenticated } = useAuth();
-  const { setCategory, setSearch } = useSearch(); // Usa el contexto
+  const { search, setSearch, setCategory } = useSearch(); // Usa el contexto
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -46,17 +46,29 @@ const Navbar = () => {
           type="text" 
           className="search-bar" 
           placeholder="Buscar..." 
+          value={search}
+          onChange={e => setSearch(e.target.value)}
         />
       </div>
       
       <ul className={isActive ? 'active' : ''}>
         <li>
-          <Link to="/" className="nav-link" onClick={() => setIsActive(false)}>TIENDA</Link>
+          <Link
+            to="/"
+            className="nav-link"
+            onClick={() => {
+              setSearch('');
+              setCategory('all');
+              setIsActive(false);
+            }}
+          >
+            TIENDA
+          </Link>
         </li>
 
         {isAuthenticated() && (
           <li>
-            <Link to="/biblioteca" className="nav-link" onClick={() => setIsActive(false)}>BIBLIOTECA</Link>
+            <Link to="/biblioteca" className="nav-link" onClick={() => setIsActive(false)}>JUEGOS EXTERNOS</Link>
           </li>
         )}
 

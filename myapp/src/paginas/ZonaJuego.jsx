@@ -147,8 +147,8 @@ const ZonaJuego = () => {
     <div className="biblioteca-container">
       <div className="biblioteca-hero">
         <div className="hero-content">
-          <h1>Zona de Juegos Premium</h1>
-          <p>Explora nuestra selección de juegos en la nube y disfruta de la mejor experiencia gaming sin descargas</p>
+          <h1>Zona de juegos externos</h1>
+          <p>Explora nuestra selección de juegos fuera de nuestra biblioteca y disfruta de navegar en la mejor experiencia gaming</p>
           
           <div className="search-container">
             <span className="search-icon">🔍</span>
