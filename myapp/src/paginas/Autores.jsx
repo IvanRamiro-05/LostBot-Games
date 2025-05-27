@@ -32,8 +32,8 @@ const Autores = () => {
     {
       id: 3,
       nombre: "Julian Javier Lizcano",
-      rol: "Alivio comico",
-      descripcion: "No hizo nada pero es el alivio comico del grupo.",
+      rol: "Backend Developer",
+      descripcion: "Desarrollo en la informacion de los videojuegos",
       imagen: autor3,
       github: "https://github.com/jjlizcano",
       linkedin: "https://linkedin.com/in/autor3"
