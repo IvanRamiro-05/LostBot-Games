@@ -83,6 +83,22 @@ La aplicación está construida utilizando React con Vite como bundler, y utiliz
 - Efectos de transición para mejorar la experiencia de usuario
 
 ---
+## 🖥️ Backend Implementado
+
+El backend de LostBot Games fue desarrollado para soportar las funcionalidades principales de la plataforma y facilitar la gestión de usuarios, juegos y compras. Las principales características del backend son:
+
+- **API RESTful** desarrollada con Node.js y Express.
+- **Base de datos MongoDB** para almacenar usuarios, juegos y transacciones.
+- **Rutas protegidas** para operaciones sensibles (compra de juegos, acceso a biblioteca, edición de perfil).
+- **Autenticación y autorización** mediante tokens JWT.
+- **Encriptación de contraseñas** usando bcrypt.
+- **Endpoints principales**:
+  - Registro e inicio de sesión de usuarios
+  - Consulta y filtrado de juegos
+  - Gestión de compras y biblioteca de usuario
+  - Actualización de perfil y métodos de pago
+- **Manejo de errores y validaciones** para garantizar la integridad de los datos.
+- **Despliegue** en servicios cloud para alta disponibilidad.
 
 ## 🔄 Cómo funciona la aplicación
 
