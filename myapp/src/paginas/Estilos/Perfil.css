@@ -303,6 +303,56 @@
   font-size: 0.8rem;
 }
 
+/* Mis Juegos Vertical List */
+.mis-juegos-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.juego-list-card {
+  display: flex;
+  align-items: center;
+  background: #181818;
+  border: 2px solid #8e0303;
+  border-radius: 18px;
+  padding: 12px 24px;
+  min-height: 80px;
+  box-shadow: 0 2px 8px rgba(142, 3, 3, 0.08);
+  transition: box-shadow 0.2s;
+}
+
+.juego-list-card:hover {
+  box-shadow: 0 4px 16px rgba(142, 3, 3, 0.18);
+  border-color: #b50404;
+}
+
+.juego-list-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-right: 22px;
+  border: 1.5px solid #333;
+  background: #222;
+}
+
+.juego-list-title {
+  font-size: 1.15rem;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.juego-list-price {
+  color: #8e0303;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .info-panel {

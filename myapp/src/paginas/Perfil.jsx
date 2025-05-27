@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import './Estilos/Perfil.css';
@@ -7,6 +6,7 @@ import './Estilos/Perfil.css';
 const Perfil = () => {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('info');
+  const [misJuegos, setMisJuegos] = useState([]);
   
   
 // Estado para almacenar los logros
@@ -37,6 +37,38 @@ useEffect(() => {
 }, [currentUser]);
 
 console.log('Estado logros:', logros);
+
+useEffect(() => {
+  const fetchJuegos = async () => {
+    if (!currentUser?.email) return;
+    try {
+      // 1. Obtener el ID del usuario por email
+      const resUser = await fetch(`http://localhost:3000/users/email/${encodeURIComponent(currentUser.email)}`);
+      if (!resUser.ok) return;
+      const userData = await resUser.json();
+      const userId = userData.id;
+
+      // 2. Obtener los juegos de la biblioteca de ese usuario
+      const resJuegos = await fetch(`http://localhost:3000/users/${userId}/library`);
+      if (!resJuegos.ok) return;
+      let juegos = await resJuegos.json();
+
+      // Mapea los campos para el frontend
+      juegos = juegos.map(juego => ({
+        id: juego.id,
+        title: juego.titulo,
+        price: juego.precio,
+      }));
+
+      setMisJuegos(juegos);
+    } catch (err) {
+      setMisJuegos([]);
+    }
+  };
+  if (currentUser?.email) {
+    fetchJuegos();
+  }
+}, [currentUser]);
 
   return (
     <div className="perfil-page">
@@ -120,24 +152,23 @@ console.log('Estado logros:', logros);
           <div className="biblioteca-panel">
             <h2>Mi Biblioteca de Juegos</h2>
             <Link to="/biblioteca" className="view-all-btn">Ver todos mis juegos</Link>
-            <div className="games-grid">
-              {/* Aquí irían los juegos del usuario */}
-              <div className="game-card">
-                <div className="game-image placeholder"></div>
-                <h3>Juego 1</h3>
-                <p>Último juego: Ayer</p>
-              </div>
-              <div className="game-card">
-                <div className="game-image placeholder"></div>
-                <h3>Juego 2</h3>
-                <p>Último juego: Hace 3 días</p>
-              </div>
-              <div className="game-card">
-                <div className="game-image placeholder"></div>
-                <h3>Juego 3</h3>
-                <p>Último juego: Hace 1 semana</p>
-              </div>
-            </div>
+            <div className="mis-juegos-vertical-list">
+  {misJuegos.length === 0 ? (
+    <p>No tienes juegos en tu biblioteca.</p>
+  ) : (
+    misJuegos.map((juego) => (
+      <div className="juego-list-card" key={juego.id}>
+        {juego.image && (
+          <img src={juego.image} alt={juego.title} className="juego-list-img" />
+        )}
+        <div>
+          <span className="juego-list-title">{juego.title}</span>
+          <p className="juego-list-price">${juego.price}</p>
+        </div>
+      </div>
+    ))
+  )}
+</div>
           </div>
         )}
 

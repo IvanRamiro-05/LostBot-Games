@@ -97,14 +97,16 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.get('/games', (req, res) => {
-  connection.query('SELECT * FROM juegos', (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error en la base de datos' });
+app.get('/games', async (req, res) => {
+  try {
+    const [results] = await pool.query('SELECT * FROM juegos');
     res.json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ error: 'Error en la base de datos' });
+  }
 });
 
-app.get('/users/:id/library', (req, res) => {
+app.get('/users/:id/library', async (req, res) => {
   const userId = req.params.id;
   const sql = `
     SELECT juegos.* FROM juegos
@@ -112,10 +114,12 @@ app.get('/users/:id/library', (req, res) => {
     JOIN biblioteca ON biblioteca_juegos.biblioteca_id = biblioteca.id
     WHERE biblioteca.usuario_id = ?
   `;
-  connection.query(sql, [userId], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error en la base de datos' });
+  try {
+    const [results] = await pool.query(sql, [userId]);
     res.json(results);
-  });
+  } catch (err) {
+    res.status(500).json({ error: 'Error en la base de datos' });
+  }
 });
 
 app.get('/logros/:email', async (req, res) => {
