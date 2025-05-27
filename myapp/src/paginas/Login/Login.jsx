@@ -103,11 +103,8 @@ const handleSubmit = async (e) => {
           <p>¿No tienes una cuenta? <Link to="/registro">Regístrate</Link></p>
           <p><Link to="/">Olvidé mi contraseña</Link></p>
         </div>
-        {/* Texto adicional para usuario y clave de prueba */}
-        <div className="test-credentials">
-          <p><strong>Usuario de prueba:</strong> usuario@ejemplo.com</p>
-          <p><strong>Contraseña de prueba:</strong> contraseña123</p>
-        </div>
+       
+        
       </div>
     </div>
   );
