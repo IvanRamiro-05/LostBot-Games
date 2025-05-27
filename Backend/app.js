@@ -1,23 +1,19 @@
-// app.js (o donde sea que crees app)
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const app = express();
 const mysql = require('mysql2/promise');
-app.use(cors({
-  origin: 'http://localhost:5173'  // Cambia a la URL y puerto donde corre tu frontend React
-}));
+const app = express();
 
+// Permite solicitudes desde el frontend en localhost:5173 (React)
+app.use(cors({ origin: 'http://localhost:5173' }));
+
+// Configuración del puerto (usa 3000 si no hay uno definido en variables de entorno)
 app.set('port', process.env.PORT || 3000);
 
-// app.js (o donde sea que crees app)
-
-app.use(cors({
-  origin: 'http://localhost:5173'  // Cambia a la URL y puerto donde corre tu frontend React
-}));
-
+// Middleware para procesar JSON en las solicitudes
 app.use(express.json());
-//coneccion a la base de datos
+
+// Conexión a la base de datos MySQL
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
@@ -25,14 +21,17 @@ const pool = mysql.createPool({
   database: 'lostbot_games'
 });
 
+// Ruta para registrar nuevos usuarios
 app.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
+  // Validación básica de campos
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Faltan datos' });
   }
 
   try {
+    // Verifica si el email ya está registrado
     const [existingUser] = await pool.query(
       'SELECT * FROM usuarios WHERE email = ?',
       [email]
@@ -42,6 +41,7 @@ app.post('/register', async (req, res) => {
       return res.status(409).json({ message: 'El email ya está registrado' });
     }
 
+    // Inserta el nuevo usuario
     await pool.query(
       'INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)',
       [username, email, password]
@@ -53,14 +53,18 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Error al registrar usuario' });
   }
 });
+
+// Ruta para iniciar sesión
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
+  // Verifica que se envíen ambos campos
   if (!email || !password) {
     return res.status(400).json({ message: 'Faltan credenciales' });
   }
 
   try {
+    // Busca al usuario por email
     const [rows] = await pool.query(
       'SELECT * FROM usuarios WHERE email = ?',
       [email]
@@ -71,19 +75,20 @@ app.post('/login', async (req, res) => {
     }
 
     const user = rows[0];
-    console.log('Contraseña enviada:', password);
-    console.log('Contraseña en BD:', user.password);
 
+    // Verificación simple de contraseña (sin hash)
     if (user.password !== password) {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
+    // Genera un token JWT válido por 1 hora
     const token = jwt.sign(
       { id: user.id, email: user.email },
       'tu_secreto_jwt',
       { expiresIn: '1h' }
     );
 
+    // Devuelve el token y el nombre del usuario
     res.json({
       message: 'Login exitoso',
       token,
@@ -96,7 +101,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-
+// Ruta para obtener todos los juegos
 app.get('/games', async (req, res) => {
   try {
     const [results] = await pool.query('SELECT * FROM juegos');
@@ -106,6 +111,7 @@ app.get('/games', async (req, res) => {
   }
 });
 
+// Ruta para obtener la biblioteca de un usuario por su ID
 app.get('/users/:id/library', async (req, res) => {
   const userId = req.params.id;
   const sql = `
@@ -122,21 +128,21 @@ app.get('/users/:id/library', async (req, res) => {
   }
 });
 
+// Ruta para obtener los logros de un usuario por su email
 app.get('/logros/:email', async (req, res) => {
   const email = req.params.email;
-  console.log('Email recibido:', email);
 
   try {
+    // Busca el ID del usuario por email
     const [usuarios] = await pool.query('SELECT id FROM usuarios WHERE email = ?', [email]);
-    console.log('Resultado consulta usuarios:', usuarios);
 
     if (usuarios.length === 0) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
     const usuarioId = usuarios[0].id;
-    console.log('ID usuario:', usuarioId);
 
+    // Consulta los logros del usuario
     const [logros] = await pool.query(
       `SELECT l.nombre, l.descripcion
        FROM usuario_logros ul
@@ -144,7 +150,6 @@ app.get('/logros/:email', async (req, res) => {
        WHERE ul.usuario_id = ?`,
       [usuarioId]
     );
-    console.log('Logros encontrados:', logros);
 
     res.json(logros);
   } catch (error) {
@@ -152,6 +157,8 @@ app.get('/logros/:email', async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
+
+// Ruta para obtener el ID del usuario por su email
 app.get('/users/email/:email', async (req, res) => {
   const email = req.params.email;
   try {
@@ -162,17 +169,11 @@ app.get('/users/email/:email', async (req, res) => {
     res.status(500).json({ error: 'Error en la base de datos' });
   }
 });
-// aquí el resto de la configuración de app...
+
+// Ruta raíz para verificar que el backend esté funcionando
 app.get('/', (req, res) => {
   res.send('Backend funcionando correctamente');
 });
 
-module.exports = app;
-
-
-// aquí el resto de la configuración de app...
-app.get('/', (req, res) => {
-  res.send('Backend funcionando correctamente');
-});
-
+// Exporta la app para poder iniciarla desde otro archivo
 module.exports = app;

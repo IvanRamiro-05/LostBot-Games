@@ -2,10 +2,11 @@ const { sequelize } = require('./database');
 
 const initDB = async () => {
     try {
+        // Conectar a la base de datos MySQL
         await sequelize.query('CREATE DATABASE IF NOT EXISTS lostbot_games');
         await sequelize.query('USE lostbot_games');
 
-        // Crear tablas
+        // Crear tabla de usuarios
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS usuarios (
                 id INT NOT NULL AUTO_INCREMENT,
@@ -16,6 +17,7 @@ const initDB = async () => {
             )
         `);
 
+        // Crear tabla de juegos
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS juegos (
                 id INT NOT NULL AUTO_INCREMENT,
@@ -25,6 +27,7 @@ const initDB = async () => {
             )
         `);
 
+        // Crear tabla de logros
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS logros (
                 id INT NOT NULL AUTO_INCREMENT,
@@ -34,15 +37,18 @@ const initDB = async () => {
             )
         `);
 
+        // Crear tabla de bibliotecas de usuarios
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS biblioteca (
                 id INT NOT NULL AUTO_INCREMENT,
                 usuario_id INT NOT NULL,
                 PRIMARY KEY (id),
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+                -- Podrías agregar ON DELETE CASCADE aquí si quieres eliminar bibliotecas al eliminar usuarios
             )
         `);
 
+        // Crear tabla intermedia para juegos en la biblioteca
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS biblioteca_juegos (
                 biblioteca_id INT NOT NULL,
@@ -50,9 +56,11 @@ const initDB = async () => {
                 PRIMARY KEY (biblioteca_id, juego_id),
                 FOREIGN KEY (biblioteca_id) REFERENCES biblioteca(id),
                 FOREIGN KEY (juego_id) REFERENCES juegos(id)
+                -- Considera ON DELETE CASCADE también
             )
         `);
 
+        // Crear tabla intermedia para logros de usuarios
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS usuario_logros (
                 usuario_id INT NOT NULL,
@@ -63,7 +71,7 @@ const initDB = async () => {
             )
         `);
 
-        // Insertar datos
+        // Insertar usuarios (usando INSERT IGNORE para evitar duplicados)
         const usuarios = [
             [1, 'alice@example.com', 'Alice', 'password1'],
             [2, 'bob@example.com', 'Bob', 'password2'],
@@ -77,6 +85,7 @@ const initDB = async () => {
             );
         }
 
+        // Insertar juegos
         const juegos = [
             [1, 'Stardew Valley', 7.49],
             [2, 'Dark Souls III', 29.99],
@@ -95,6 +104,7 @@ const initDB = async () => {
             );
         }
 
+        // Insertar logros
         const logros = [
             [1, 'Primer Juego', 'Has añadido tu primer juego a la biblioteca'],
             [2, 'Maestro de Logros', 'Has conseguido todos los logros de un juego'],
@@ -109,6 +119,7 @@ const initDB = async () => {
             );
         }
 
+        // Insertar bibliotecas asociadas a los usuarios
         const bibliotecas = [
             [1, 1],
             [2, 2],
@@ -122,10 +133,11 @@ const initDB = async () => {
             );
         }
 
+        // Insertar juegos en las bibliotecas
         const bibliotecaJuegos = [
             [1, 1], [1, 7], [1, 8],
             [2, 2], [2, 3], [2, 5],
-            [3, 4], [3, 6]
+            [3, 4], [3, 6] // Asegúrate de que biblioteca_id = 3 y juego_id = 4,6 existan
         ];
 
         for (const bj of bibliotecaJuegos) {
@@ -135,6 +147,7 @@ const initDB = async () => {
             );
         }
 
+        // Insertar logros de usuarios
         const usuarioLogros = [
             [1, 1], [1, 4],
             [2, 3],
@@ -152,9 +165,9 @@ const initDB = async () => {
     } catch (error) {
         console.error('Error initializing the database:', error);
     } finally {
+        // Cierra la conexión una vez terminada la inicialización
         await sequelize.close();
     }
 };
-
 
 module.exports = initDB;
